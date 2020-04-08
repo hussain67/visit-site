@@ -26,17 +26,21 @@ class RunAfterCompile {
 
 let cssConfig = {
     test: /\.(s?)css$/i,
-    use: ['css-loader', {
-        loader: 'postcss-loader',
-        options: {
-            plugins: postCSSPlugins
-        }
-    }, 'sass-loader']
+    use: ['css-loader',
+
+        {
+            loader: 'postcss-loader',
+            options: {
+                plugins: postCSSPlugins
+            }
+        },
+        'sass-loader'
+    ]
 }
 
 let pages = fse.readdirSync('./app').filter(function (file) {
-    return file.endsWith('.html')
-}).map(function (page) {
+    return file.endsWith('.html')}).map(function (page)
+     {
     return new HtmlWebpackPlugin({
         filename: page,
         template: `./app/${page}`
@@ -74,12 +78,12 @@ if (currentTask == 'dev') {
 
 if (currentTask == 'build') {
     config.module.rules.push({
-        test:/\.js$/,
-        exclude:/(node_modules)/,
-        use:{
-            loader:'babel-loader',
-            options:{
-                presets:['@babel/preset-env']
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+            loader: 'babel-loader',
+            options: {
+                presets: ['@babel/preset-env']
             }
         }
     })
@@ -103,7 +107,6 @@ if (currentTask == 'build') {
             filename: 'styles.[chunkhash].css'
         }),
         new RunAfterCompile()
-
     )
 }
 
